@@ -1,10 +1,19 @@
 package br.gov.sp.fatec. springboot3app2025.entity;
 
+import java.util.HashSet;
+import java.util.List;
+import java.util.Set;
+
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
+import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.JoinTable;
+import jakarta.persistence.ManyToMany;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
 
 @Entity
@@ -22,16 +31,15 @@ public class Usuario {
     @Column(name = "usr_senha")
     private String senha;
 
-    public Usuario() {
+    @OneToMany(mappedBy = "usuario", fetch = FetchType.LAZY)
+    private Set<Anotacao> anotacoes;
 
-     }
-
-    public Usuario(String nome, String senha) {
-        this();
-        this.nome = nome;
-        this.senha = senha;
-    }
-
+    @ManyToMany
+    @JoinTable(name = "uau_usuario_autorizacao",
+    joinColumns = {@JoinColumn(name = "usr_id")},
+    inverseJoinColumns = {@JoinColumn(name = "aut_id")})
+    private List<Autorizacao> autorizacoes;
+        
     public Long getId() {
         return id;
     }
