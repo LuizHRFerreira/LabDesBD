@@ -17,15 +17,17 @@ public class UsuarioService {
     public Usuario buscarPorId(Long id) {
         Optional<Usuario> usuarioOp = usuarioRepo.findById(id);
         if(usuarioOp.isPresent()) {
-        return usuarioOp.get();
-    }
+            return usuarioOp.get();
+        }
     
-    throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Id inválido!");
+        throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Id inválido!");
+    
     }
-        public Usuario novoUsuario(Usuario usuario) {
-            if(usuario == null ||
-            usuario.getNome() == null ||
-            usuario.getSenha() == null) {
+
+    public Usuario novo(Usuario usuario) {
+        if(usuario == null ||
+        usuario.getNome() == null ||
+        usuario.getSenha() == null) {
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Nome e senha inválidos!");
         }
 
@@ -35,4 +37,5 @@ public class UsuarioService {
     public List<Usuario> buscarTodos() {
         return usuarioRepo.findAll();
     }
+    
 }
